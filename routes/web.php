@@ -1,6 +1,7 @@
 <?php
 
 use Illuminate\Support\Facades\Artisan;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
 use Mcamara\LaravelLocalization\Facades\LaravelLocalization;
 
@@ -23,11 +24,6 @@ Route::group([ 'prefix' => LaravelLocalization::setLocale(), 'middleware' => [ '
         return view('welcome');
     });
 
-});
-
-Route::get('/clear', function() {
-    Artisan::call('config:cache');
-    return '<h1>Config cache cleared successfully</h1>';
 });
 
 Auth::routes();

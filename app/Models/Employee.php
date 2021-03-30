@@ -1,0 +1,70 @@
+<?php
+
+namespace App\Models;
+
+use Carbon\Carbon;
+use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Illuminate\Database\Eloquent\Model;
+use Illuminate\Notifications\Notifiable;
+use Laratrust\Traits\LaratrustUserTrait;
+
+class Employee extends Model
+{
+    use LaratrustUserTrait, HasFactory, Notifiable;
+
+    protected $fillable = [
+        'image',
+        'username',
+        'email',
+        'password',
+        'phone',
+        'address',
+        'birthday',
+        'personal_id',
+        'emp_id',
+        'banned',
+        'created_by'
+    ];
+
+
+    protected $hidden = [
+        'password',
+        'remember_token',
+        'updated_at',
+    ];
+
+    /*
+    *****************************************************************************
+    *************************** Begin RELATIONS Area ****************************
+    *****************************************************************************
+    */
+
+
+
+    /*
+    *****************************************************************************
+    *************************** Begin SCOPE Area ****************************
+    *****************************************************************************
+    */
+    public function scopeWithOutAuth($query)
+    {
+        // return $query->where('id', '<>', auth()->user()->id);
+    } // Return all Employees With Out The Employee Make Auth
+
+    public function scopewithOutSuperAdmin($query)
+    {
+        return $query->withOutAuth()->whereRoleIs(['admin', 'manager', 'employee']);
+    } // Return all Employees With Out The Role Super Admin
+
+
+    /*
+    *****************************************************************************
+    *************************** Begin ATTRIBUTES Area ****************************
+    *****************************************************************************
+    */
+
+    public function getCreatedAtAttribute($date)
+    {
+        return Carbon::parse($date)->diffForhumans();
+    } // to make formating to the created_at filed
+}

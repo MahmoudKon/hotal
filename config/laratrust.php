@@ -73,7 +73,7 @@ return [
     |
     */
     'user_models' => [
-        'users' => \App\Models\User::class,
+        'users' => \App\Models\Employee::class,
     ],
 
     /*
@@ -299,7 +299,7 @@ return [
         | These middleware will get attached onto each Laratrust panel route.
         |
         */
-        'middleware' => ['web'],
+        'middleware' => ['employee'],
 
         /*
         |--------------------------------------------------------------------------
