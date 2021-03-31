@@ -30,7 +30,7 @@ return [
         'newestOnTop'       => false,
         'onHidden'          => null,
         'onShown'           => null,
-        'positionClass'     => 'toast-top-right',
+        'positionClass'     => "toast-top-center",
         'preventDuplicates' => true,
         'progressBar'       => true,
         'progressClass'     => 'toast-progress',

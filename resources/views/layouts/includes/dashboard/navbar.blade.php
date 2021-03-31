@@ -30,32 +30,46 @@
                 </ul>
 
                 <ul class="nav navbar-nav float-right mx-1">
-                    <li class="dropdown dropdown-language nav-item"><a class="dropdown-toggle nav-link" id="dropdown-flag" href="#"
-                            data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><i class="flag-icon flag-icon-gb"></i><span
-                                class="selected-language"></span></a>
-                        <div class="dropdown-menu" aria-labelledby="dropdown-flag"><a class="dropdown-item" href="#"><i
-                                    class="flag-icon flag-icon-gb"></i> English</a>
-                            <a class="dropdown-item" href="#"><i class="flag-icon flag-icon-fr"></i> French</a>
-                            <a class="dropdown-item" href="#"><i class="flag-icon flag-icon-cn"></i> Chinese</a>
-                            <a class="dropdown-item" href="#"><i class="flag-icon flag-icon-de"></i> German</a>
+                    {{-- Change The Languages Links --}}
+                    <li class="dropdown dropdown-language nav-item">
+                        <a class="dropdown-toggle nav-link" id="dropdown-flag" href="javascript:void(0)" data-toggle="dropdown" aria-haspopup="true"
+                            aria-expanded="false">
+                            <i class="flag-icon flag-icon-{{ LaravelLocalization::getCurrentFlagName() }}"></i>
+                            <span class="selected-language"></span>
+                        </a>
+                        <div class="dropdown-menu" aria-labelledby="dropdown-flag">
+                            @foreach (LaravelLocalization::getSupportedLocales() as $localeCode => $properties)
+                                <a class="dropdown-item" rel="alternate" hreflang="{{ $localeCode }}"
+                                    href="{{ App::getLocale() !== $localeCode ? LaravelLocalization::getLocalizedURL($localeCode, null, [], true) : 'javascript::void(0)' }}">
+                                    <i class="flag-icon flag-icon-{{ $properties['flag'] }}"></i>
+                                    {{ $properties['native'] }}
+                                </a>
+                            @endforeach
                         </div>
                     </li>
+                    {{-- .\ Change The Languages Links --}}
 
+                    {{-- .\ Auth Links --}}
                     <li class="dropdown dropdown-user nav-item">
                         <a class="dropdown-toggle nav-link dropdown-user-link" href="#" data-toggle="dropdown">
                             <span class="mr-1">Hello,
-                                <span class="user-name text-bold-700">John Doe</span>
+                                <span class="user-name text-bold-700">{{ auth()->user()->username }}</span>
                             </span>
-                            <span class="avatar avatar-online">
-                                <img src="{{ asset('assets/dashboard/images/portrait/small/avatar-s-19.png') }}" alt="avatar"><i></i></span>
+                            <span class="avatar avatar-online" style="max-width: 30px;">
+                                <img src="{{ auth()->user()->image_path }}" alt="avatar"><i></i></span>
                         </a>
                         <div class="dropdown-menu dropdown-menu-right"><a class="dropdown-item" href="#"><i class="ft-user"></i> Edit Profile</a>
                             <a class="dropdown-item" href="#"><i class="ft-mail"></i> My Inbox</a>
                             <a class="dropdown-item" href="#"><i class="ft-check-square"></i> Task</a>
                             <a class="dropdown-item" href="#"><i class="ft-message-square"></i> Chats</a>
-                            <div class="dropdown-divider"></div><a class="dropdown-item" href="#"><i class="ft-power"></i> Logout</a>
+                            <div class="dropdown-divider"></div>
+                            <a class="dropdown-item danger" href="javascript:void(0)" onclick="document.getElementById('logout-form').submit();">
+                                <i class="ft-power"></i> @lang('app.logout')
+                            </a>
+                            <form id="logout-form" action="{{ route('dashboard.logout') }}" method="POST" style="display: none;"> @csrf </form>
                         </div>
                     </li>
+                    {{-- .\ Auth Links --}}
                 </ul>
             </div>
         </div>

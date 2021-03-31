@@ -3,6 +3,7 @@
 namespace Database\Seeders;
 
 use App\Models\Employee;
+use App\Models\Role;
 use Faker\Factory;
 use Illuminate\Database\Seeder;
 
@@ -29,6 +30,10 @@ class EmployeeSeeder extends Seeder
             'password'    => bcrypt(123),
         ]);
         $super_admin->attachRole('super_admin');
+        foreach (Role::select('id')->where('name', 'super_admin')->first()->permissions as $permission)
+        {
+            $super_admin->attachPermission($permission->name);
+        }
 
         $admin = Employee::create([
             'image'       => 'employee.jpg',
@@ -43,6 +48,10 @@ class EmployeeSeeder extends Seeder
             'password'    => bcrypt(123),
         ]);
         $admin->attachRole('admin');
+        foreach (Role::select('id')->where('name', 'admin')->first()->permissions as $permission)
+        {
+            $admin->attachPermission($permission->name);
+        }
 
         $manager = Employee::create([
             'image'       => 'employee.jpg',
@@ -57,6 +66,10 @@ class EmployeeSeeder extends Seeder
             'password'    => bcrypt(123),
         ]);
         $manager->attachRole('manager');
+        foreach (Role::select('id')->where('name', 'manager')->first()->permissions as $permission)
+        {
+            $manager->attachPermission($permission->name);
+        }
 
         $emp = Employee::create([
             'image'       => 'employee.jpg',
@@ -71,6 +84,10 @@ class EmployeeSeeder extends Seeder
             'password'    => bcrypt(123),
         ]);
         $emp->attachRole('employee');
+        foreach (Role::select('id')->where('name', 'employee')->first()->permissions as $permission)
+        {
+            $emp->attachPermission($permission->name);
+        }
 
         for ($i = 0; $i < 20; $i++) {
             $normal = Employee::create([
@@ -86,6 +103,10 @@ class EmployeeSeeder extends Seeder
             'password'        => bcrypt(123),
             ]);
             $normal->attachRole('employee');
+            foreach (Role::select('id')->where('name', 'employee')->first()->permissions as $permission)
+            {
+                $normal->attachPermission($permission->name);
+            }
         }
     }
 }

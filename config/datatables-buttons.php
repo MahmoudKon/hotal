@@ -75,12 +75,12 @@ return [
         /*
          * Default columns to generate when not set.
          */
-        'columns' => 'id,add your columns,created_at,updated_at',
+        'columns' => 'id,add your columns,created_at',
 
         /*
          * Default buttons to generate when not set.
          */
-        'buttons' => 'create,export,print,reset,reload',
+        'buttons' => 'export,print',
 
         /*
          * Default DOM to generate when not set.

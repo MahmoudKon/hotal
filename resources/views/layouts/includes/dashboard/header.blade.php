@@ -30,6 +30,7 @@
 
     <!-- BEGIN MODERN CSS -->
     <link rel="stylesheet" type="text/css" href="{{ asset('assets/dashboard/css/app.css') }}">
+    <link rel="stylesheet" type="text/css" href="{{ asset('assets/dashboard/css/core/colors/palette-gradient.css') }}">
     <!-- END MODERN CSS -->
 
     <!-- BEGIN Page Level CSS -->
@@ -40,6 +41,11 @@
     @if (App::isLocale('ar'))
     @else
     @endif
+
+    <!-- BEGIN Toastr Alert CSS -->
+    @toastr_css
+    <!-- BEGIN Toastr Alert CSS -->
+
     <!-- BEGIN Custom CSS -->
     <link rel="stylesheet" type="text/css" href="{{ asset('assets/dashboard/assets/css/style.css') }}">
     <!-- END Custom CSS -->

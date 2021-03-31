@@ -24,18 +24,6 @@
 <script type="text/javascript" src="{{ asset('assets/dashboard/js/scripts/customizer.js') }}"></script>
 <!-- END MODERN JS -->
 
-<!-- BEGIN PAGE LEVEL JS -->
-<script type="text/javascript" src="{{ asset('assets/dashboard/js/scripts/customizer.js') }}"></script>
-<!-- END PAGE LEVEL JS -->
-
-<!-- BEGIN Datatables JS -->
-{{-- <script type="text/javascript" src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/js/bootstrap.min.js"></script>
-<script type="text/javascript" src="https://cdn.datatables.net/1.10.21/js/jquery.dataTables.min.js"></script>
-<script type="text/javascript" src="https://cdn.datatables.net/1.10.21/js/dataTables.bootstrap4.min.js"></script>
-<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jquery-validate/1.19.0/jquery.validate.js"></script>
-<script type="text/javascript" src="https://cdn.datatables.net/buttons/1.0.3/js/dataTables.buttons.min.js"></script> --}}
-<!-- END Datatables JS -->
-
 <!-- BEGIN Alerts JS -->
 @toastr_js
 @toastr_render

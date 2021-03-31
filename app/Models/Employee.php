@@ -5,10 +5,11 @@ namespace App\Models;
 use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use Laratrust\Traits\LaratrustUserTrait;
 
-class Employee extends Model
+class Employee extends Authenticatable
 {
     use LaratrustUserTrait, HasFactory, Notifiable;
 
@@ -40,7 +41,6 @@ class Employee extends Model
     */
 
 
-
     /*
     *****************************************************************************
     *************************** Begin SCOPE Area ****************************
@@ -62,6 +62,10 @@ class Employee extends Model
     *************************** Begin ATTRIBUTES Area ****************************
     *****************************************************************************
     */
+    public function getImagePathAttribute($date)
+    {
+        return asset('uploads/images/employees/' . $this->image);
+    } // return the image path
 
     public function getCreatedAtAttribute($date)
     {

@@ -22,7 +22,7 @@ Route::group([ 'prefix' => LaravelLocalization::setLocale(), 'middleware' => [ '
 
     Route::get('/', function () {
         return view('welcome');
-    });
+    })->name('/');
 
 });
 

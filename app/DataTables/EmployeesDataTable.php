@@ -21,7 +21,7 @@ class EmployeesDataTable extends DataTable
     {
         return datatables()
             ->eloquent($query)
-            ->addColumn('action', 'dashboard.employees.actions');
+            ->addColumn('action', 'dashboard.includes.buttons.actions');
     }
 
     /**

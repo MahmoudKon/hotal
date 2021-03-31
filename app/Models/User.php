@@ -13,7 +13,7 @@ class User extends Authenticatable
     use LaratrustUserTrait, HasFactory, Notifiable;
 
     protected $fillable = [
-        'name',
+        'username',
         'email',
         'password',
     ];
