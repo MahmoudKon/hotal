@@ -21,7 +21,7 @@ function in_url($link)
 function table_name()
 {
     $url = explode('/', request()->route()->uri);
-    if (strlen($url[0]) == 2)
+    if (strlen($url[0]) < 3)
         array_shift($url);
 
     return $url[1];
@@ -33,4 +33,16 @@ function table_name()
 function model_name()
 {
     return Illuminate\Support\Str::singular(table_name());
+} // END
+
+/*
+    this function return all permissions
+*/
+function get_permissions()
+{
+    $permissions = [];
+    foreach (App\Models\Permission::select('name')->get() as $permission)
+        $permissions[ last(explode('-', $permission['name'])) ] [] = $permission['name'];
+
+    return $permissions;
 } // END

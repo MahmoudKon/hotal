@@ -52,7 +52,7 @@
                     {{-- .\ Auth Links --}}
                     <li class="dropdown dropdown-user nav-item">
                         <a class="dropdown-toggle nav-link dropdown-user-link" href="#" data-toggle="dropdown">
-                            <span class="mr-1">Hello,
+                            <span class="mr-1">@lang('employees.hello'),
                                 <span class="user-name text-bold-700">{{ auth()->user()->username }}</span>
                             </span>
                             <span class="avatar avatar-online" style="max-width: 30px;">

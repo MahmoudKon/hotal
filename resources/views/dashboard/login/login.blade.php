@@ -26,7 +26,8 @@
                                         <div class="input-group-prepend">
                                             <span class="input-group-text"> <i class="fa fa-user"></i> </span>
                                         </div>
-                                        <input type="text" id="username" placeholder="@lang('app.your_name') | @lang('app.email') | @lang('app.phone')"
+                                        <input type="text" id="username"
+                                            placeholder="@lang('employees.username') | @lang('employees.email') | @lang('employees.phone')"
                                             name="username" class="form-control @error('username') is-invalid @enderror"
                                             value="{{ old('username') ?? 'super_admin' }}" autofocus required>
                                         @error('username')
@@ -42,7 +43,7 @@
                                         <div class="input-group-prepend">
                                             <span class="input-group-text"> <i class="fas fa-eye toggle-password"></i> </span>
                                         </div>
-                                        <input type="password" id="password" placeholder="@lang('app.password')" name="password"
+                                        <input type="password" id="password" placeholder="@lang('employees.password')" name="password"
                                             class="form-control form-control-lg input-lg @error('username') is-invalid @enderror"
                                             value="{{ old('password') ?? 123 }}" required>
                                     </div>
@@ -55,7 +56,7 @@
                                         <fieldset>
                                             <input class="chk-remember" type="checkbox" name="remember" id="remember"
                                                 {{ old('remember') ? 'checked' : '' }}>
-                                            <label class="form-check-label mx-1" for="remember"> {{ __('Remember Me') }} </label>
+                                            <label class="form-check-label mx-1" for="remember"> @lang('employees.remember_me') </label>
                                         </fieldset>
                                     </div>
                                 </div>

@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Dashboard;
 use App\DataTables\EmployeesDataTable;
 use App\Http\Controllers\DashboardController;
 use App\Models\Employee;
+use App\Models\Permission;
 use Illuminate\Http\Request;
 
 class EmployeesController extends DashboardController
@@ -84,9 +85,25 @@ class EmployeesController extends DashboardController
                 return response()->json(['message' => 'Deleted Successfuly', 'title' => 'Deleted']);
             }
         } catch (\Exception $e) {
-            toastr()->error($e->getMessage(), 'Exception');
-            return redirect()->back();
+            return response()->json(['message' => $e->getMessage(), 'title' => 'Exception'], 404);
             // return response()->json($e->getMessage(), 404);
         }
     } // end of destroy method [ destroy the record data ]
+
+    public function permissions (Request $request)
+    {
+        try {
+            $permissions = Permission::select('name')->whereHas('roles', function ($q) use ($request) {
+                return $q->where('name', $request->role);
+            })->get()->toArray();
+
+            $role_permissions = [];
+            foreach ($permissions as $index => $permission)
+                $role_permissions [] = $permission['name'];
+
+            return response(view('dashboard.employees.permissions', compact('role_permissions')));
+        } catch (\Exception $e) {
+            return response()->json(['message' => $e->getMessage(), 'title' => 'Exception'], 404);
+        }
+    } // end of permissions method [ to return all permissions that have special role ]
 }

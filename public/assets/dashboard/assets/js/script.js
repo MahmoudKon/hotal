@@ -70,6 +70,23 @@
         });
     }); // AJAX CODE TO DELETE THE RECORD AND LOAD THE DATA TABLE
 
+    $('body').on('change', '#roles', function() {
+        $.ajax({
+            url: 'permissions',
+            type: "post",
+            data: { 'role': $(this).val() },
+            beforeSend: function() { $('#permisions').addClass('loading-animation'); },
+            success: function(data, textStatus, jqXHR) {
+                $('.loading-animation').removeClass('loading-animation');
+                $('#permisions').empty().append(data);
+            },
+            error: function(jqXHR) {
+                if (jqXHR.readyState == 0)
+                    return false;
+                toastr.error(jqXHR.responseJSON.message);
+            },
+        });
+    }); // AJAX CODE TO LOAD THE PERMISSIONS WHEN CHANE THE ROLE
 
 
 })(window);

@@ -21,7 +21,8 @@ class EmployeesDataTable extends DataTable
     {
         return datatables()
             ->eloquent($query)
-            ->addColumn('action', 'dashboard.includes.buttons.actions');
+            ->addColumn('image', 'dashboard.includes.tables.image')
+            ->addColumn('action', 'dashboard.includes.buttons.buttons_table');
     }
 
     /**
@@ -50,10 +51,11 @@ class EmployeesDataTable extends DataTable
             ->dom('Bfrtip')
             ->orderBy(0)
             ->buttons(
-                Button::make('csv'),
-                Button::make('excel'),
-                Button::make('pdf'),
-                Button::make('print')
+                Button::make('csv')->text( __('app.csv') ),
+                Button::make('excel')->text( __('app.excel') ),
+                Button::make('copy')->text( __('app.copy') ),
+                Button::make('pdf')->text( __('app.pdf') ),
+                Button::make('print')->text( __('app.print') ),
             );
     }
 
@@ -66,9 +68,11 @@ class EmployeesDataTable extends DataTable
     {
         return [
             Column::make('id'),
-            Column::make('username'),
-            Column::make('email'),
-            Column::make('created_at'),
+            Column::make('username')->title( __('employees.username')),
+            Column::make('image')->title( __('employees.image')),
+            Column::make('email')->title( __('employees.email')),
+            Column::make('phone')->title( __('employees.phone')),
+            Column::make('created_at')->title( __('app.created_at')),
             Column::computed('action')
                     ->exportable(false)
                     ->printable(false)

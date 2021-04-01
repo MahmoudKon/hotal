@@ -17,6 +17,7 @@ Route::group([ 'prefix' => LaravelLocalization::setLocale(), 'middleware' => [ '
             Route::view('/', 'dashboard.dashboard')->name('/');
 
             Route::resource('employees', 'EmployeesController');
+            Route::post('employees/permissions', 'EmployeesController@permissions')->name('employees.permissions');
 
         }); // end of grouping the auth of middleware
 

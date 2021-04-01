@@ -16,6 +16,7 @@
 {{-- <script type="text/javascript" src="{{ asset('assets/dashboard/vendors/js/ui/prism.min.js') }}"></script> --}}
 <script type="text/javascript" src="{{ asset('assets/dashboard/vendors/js/tables/datatable/datatables.min.js') }}"></script>
 <script type="text/javascript" src="{{ asset('assets/dashboard/vendors/js/tables/datatable/dataTables.buttons.min.js') }}"></script>
+<script type="text/javascript" src="{{ asset('assets/dashboard/vendors/js/forms/icheck/icheck.min.js') }}"></script>
 <!-- END PAGE VENDOR JS -->
 
 <!-- BEGIN MODERN JS -->

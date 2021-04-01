@@ -8,7 +8,7 @@
 
         @if (auth()
         ->user()
-        ->hasPermission('update-' . model_name()))
+        ->hasPermission('update-' . table_name()))
             <a href="{{ route('dashboard.' . table_name() . '.edit', $id) }}" class="dropdown-item primary load-form">
                 <i class="ft-edit"></i> @lang('app.edit')
             </a>
@@ -20,11 +20,7 @@
 
         @if (auth()
         ->user()
-        ->hasPermission('delete-' . model_name()))
-            {{-- <a class="dropdown-item btn bg-transparent danger" href="javascript:void(0)" onclick="document.getElementById('delete-form').submit();">
-                <i class="ft-power"></i> @lang('app.delete')
-            </a> --}}
-
+        ->hasPermission('delete-' . table_name()))
             <a class="dropdown-item btn bg-transparent danger delete_record">
                 <i class="ft-power"></i> @lang('app.delete')
                 <form action="{{ route('dashboard.' . table_name() . '.destroy', $id) }}" method="POST" style="display: none;">
