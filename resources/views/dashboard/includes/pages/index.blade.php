@@ -8,7 +8,7 @@
             @include('dashboard.includes.cards.header')
             <div class="card-content">
                 {{-- Include the table body --}}
-                @include('dashboard.includes.tables.datatable')
+                <div id="load-datatables"></div>
             </div>
         </section>
         <!--/ Description -->

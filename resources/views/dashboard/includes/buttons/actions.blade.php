@@ -14,15 +14,23 @@
             </a>
         @endif
 
-        <a href="{{ route('dashboard.' . table_name() . '.show', $id) }}" class="dropdown-item info">
-            <i class="ft-eye "></i> @lang('app.show')
+        <a href="{{ route('dashboard.' . table_name() . '.show', $id) }}" class="dropdown-item primary load-form">
+            <i class="ft-edit"></i> @lang('app.show')
         </a>
 
         @if (auth()
         ->user()
         ->hasPermission('delete-' . model_name()))
-            <a href="{{ route('dashboard.' . table_name() . '.destroy', $id) }}" class="dropdown-item btn bg-transparent danger">
-                <i class="ft-trash"></i> @lang('app.delete')
+            {{-- <a class="dropdown-item btn bg-transparent danger" href="javascript:void(0)" onclick="document.getElementById('delete-form').submit();">
+                <i class="ft-power"></i> @lang('app.delete')
+            </a> --}}
+
+            <a class="dropdown-item btn bg-transparent danger delete_record">
+                <i class="ft-power"></i> @lang('app.delete')
+                <form action="{{ route('dashboard.' . table_name() . '.destroy', $id) }}" method="POST" style="display: none;">
+                    @csrf
+                    @method('delete')
+                </form>
             </a>
         @endif
     </span>

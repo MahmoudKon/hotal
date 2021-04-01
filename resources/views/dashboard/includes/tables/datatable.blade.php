@@ -2,6 +2,4 @@
     {{ $dataTable->table() }}
 </div>
 
-@push('script')
-    {{ $dataTable->scripts() }}
-@endpush
+{{ $dataTable->scripts() }}

@@ -1,11 +1,66 @@
-/*================================================================================
-	Item Name: Modern Admin - Clean Bootstrap 4 Dashboard HTML Template
-	Version: 1.0
-	Author: PIXINVENT
-	Author URL: http://www.themeforest.net/user/pixinvent
-================================================================================
+.loading-animation {
+    cursor: wait;
+    overflow: hidden;
+}
 
-NOTE:
-------
-PLACE HERE YOUR OWN SCSS CODES AND IF NEEDED, OVERRIDE THE STYLES FROM THE OTHER STYLESHEETS.
-WE WILL RELEASE FUTURE UPDATES SO IN ORDER TO NOT OVERWRITE YOUR STYLES IT'S BETTER LIKE THIS.  */
+.loading-animation::after {
+    display: block;
+    position: fixed;
+    top: 0;
+    left: 0;
+    bottom: 0;
+    right: 0;
+    background-color: rgba(255, 255, 255, 0.603);
+    z-index: 1000;
+}
+
+.loading-animation::before {
+    font-family: "Font Awesome 5 Free";
+    font-weight: 900;
+    content: "\f2f1";
+    position: fixed;
+    left: 50%;
+    top: 50vh;
+    font-size: 17px;
+    font-weight: bolder;
+    color: #000;
+    z-index: 1051;
+    animation: loading .6s linear infinite;
+}
+
+@keyframes loading {
+    from {
+        transform: rotate(0deg);
+    }
+    to {
+        transform: rotate(360deg);
+    }
+}
+
+
+/* END LOADING ANIMATION */
+
+
+/* BEGIN REVIEW IMAGE */
+
+#image {
+    position: relative;
+    width: 100%;
+    height: max-content;
+    padding: 0;
+    margin: 0;
+}
+
+#image>input[type=file] {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    opacity: 0;
+    z-index: 20;
+    cursor: pointer;
+}
+
+#image>img {
+    width: 100%;
+    max-height: 263px;
+}

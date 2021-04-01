@@ -28,6 +28,7 @@
 @toastr_js
 @toastr_render
 @include('sweet::alert')
+<script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
 <!-- END Alerts JS -->
 
 <!-- BEGIN Custom JS -->
