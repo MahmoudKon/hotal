@@ -4,7 +4,6 @@ namespace App\Models;
 
 use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
-use Illuminate\Database\Eloquent\Model;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use Laratrust\Traits\LaratrustUserTrait;
@@ -24,6 +23,7 @@ class Employee extends Authenticatable
         'personal_id',
         'emp_id',
         'banned',
+        'role',
         'created_by'
     ];
 
@@ -48,7 +48,7 @@ class Employee extends Authenticatable
     */
     public function scopeWithOutAuth($query)
     {
-        // return $query->where('id', '<>', auth()->user()->id);
+        return $query->where('id', '<>', auth()->user()->id);
     } // Return all Employees With Out The Employee Make Auth
 
     public function scopewithOutSuperAdmin($query)
@@ -62,6 +62,11 @@ class Employee extends Authenticatable
     *************************** Begin ATTRIBUTES Area ****************************
     *****************************************************************************
     */
+    public function setPasswordAttribute($value)
+    {
+        return $this->attributes['password'] = bcrypt($value);
+    } // Auto Hash Password
+
     public function getImagePathAttribute($date)
     {
         return asset('uploads/images/employees/' . $this->image);

@@ -21,8 +21,10 @@
             type: "get",
             beforeSend: function() { $('body').addClass('loading-animation'); },
             success: function(data, textStatus, jqXHR) {
-                $('.loading-animation').removeClass('loading-animation');
                 $('#load-datatables').empty().append(data);
+                setTimeout(function() {
+                    $('.loading-animation').removeClass('loading-animation');
+                }, 300);
             },
             error: function(jqXHR) {
                 if (jqXHR.readyState == 0)
@@ -71,14 +73,15 @@
     }); // AJAX CODE TO DELETE THE RECORD AND LOAD THE DATA TABLE
 
     $('body').on('change', '#roles', function() {
+        $('#permisions').slideUp(200);
         $.ajax({
-            url: 'permissions',
+            url: '/dashboard/employees/permissions',
             type: "post",
             data: { 'role': $(this).val() },
             beforeSend: function() { $('#permisions').addClass('loading-animation'); },
             success: function(data, textStatus, jqXHR) {
                 $('.loading-animation').removeClass('loading-animation');
-                $('#permisions').empty().append(data);
+                $('#permisions').empty().append(data).slideDown(200);
             },
             error: function(jqXHR) {
                 if (jqXHR.readyState == 0)
@@ -88,5 +91,19 @@
         });
     }); // AJAX CODE TO LOAD THE PERMISSIONS WHEN CHANE THE ROLE
 
+    $('body').on('click', 'button[type=reset]', function() {
+        $('#permisions').slideUp(200).empty();
+    }); // TO REMOVE THE PERMISSIONS SECTION WHEN RESET THE FORM
+
+    $("body").on('change', '#image input[type=file]', function() {
+        let img = $(this).parent('#image').find('img');
+        if (this.files && this.files[0]) {
+            var reader = new FileReader();
+            reader.onload = function(e) {
+                img.attr('src', e.target.result);
+            }
+            reader.readAsDataURL(this.files[0]);
+        }
+    }); // PREVIEW THE IMAGE WHEN SELECTED
 
 })(window);

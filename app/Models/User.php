@@ -2,7 +2,7 @@
 
 namespace App\Models;
 
-use Illuminate\Contracts\Auth\MustVerifyEmail;
+use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
@@ -16,6 +16,9 @@ class User extends Authenticatable
         'username',
         'email',
         'password',
+        'phone',
+        'personal_id',
+        'banned',
     ];
 
     protected $hidden = [
@@ -26,4 +29,20 @@ class User extends Authenticatable
     protected $casts = [
         'email_verified_at' => 'datetime',
     ];
+
+
+    /*
+    *****************************************************************************
+    *************************** Begin ATTRIBUTES Area ****************************
+    *****************************************************************************
+    */
+    public function setPasswordAttribute($value)
+    {
+        return $this->attributes['password'] = bcrypt($value);
+    } // Auto Hash Password
+
+    public function getCreatedAtAttribute($date)
+    {
+        return Carbon::parse($date)->diffForhumans();
+    } // to make formating to the created_at filed
 }

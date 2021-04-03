@@ -21,7 +21,7 @@
 
             {{-- Users Link --}}
             <li class="nav-item {{ in_url('users') ? 'active' : '' }}">
-                <a href="#">
+                <a href="{{ route('dashboard.users.index') }}">
                     <i class="fa fa-user"></i>
                     <span class="menu-title mx-1"> @lang('app.users') </span>
                 </a>

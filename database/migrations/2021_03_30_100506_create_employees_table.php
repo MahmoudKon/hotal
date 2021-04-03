@@ -15,7 +15,7 @@ class CreateEmployeesTable extends Migration
     {
         Schema::create('employees', function (Blueprint $table) {
             $table->id();
-            $table->string('image')->nullable()->default('image.jpg');
+            $table->string('image')->nullable()->default('default.jpg');
             $table->string('username')->unique();
             $table->string('email')->unique();
             $table->string('password');
@@ -23,8 +23,9 @@ class CreateEmployeesTable extends Migration
             $table->string('address')->nullable();
             $table->date('birthday');
             $table->unsignedBigInteger('personal_id')->unique();
-            $table->unsignedBigInteger('emp_id')->unique();
+            $table->unsignedBigInteger('emp_id')->nullable()->unique();
             $table->boolean('banned')->default(0);
+            $table->string('role')->default('employee');
             $table->unsignedBigInteger('created_by')->nullable();
             $table->rememberToken();
             $table->timestamps();

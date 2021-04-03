@@ -19,6 +19,7 @@ Route::group([ 'prefix' => LaravelLocalization::setLocale(), 'middleware' => [ '
             Route::resource('employees', 'EmployeesController');
             Route::post('employees/permissions', 'EmployeesController@permissions')->name('employees.permissions');
 
+            Route::resource('users', 'UsersController');
         }); // end of grouping the auth of middleware
 
     }); // end of grouping the prefix and as

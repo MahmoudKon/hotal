@@ -9,13 +9,13 @@
         @if (auth()
         ->user()
         ->hasPermission('update-' . table_name()))
-            <a href="{{ route('dashboard.' . table_name() . '.edit', $id) }}" class="dropdown-item primary load-form">
+            <a href="{{ route('dashboard.' . table_name() . '.edit', $id) }}" class="dropdown-item primary">
                 <i class="ft-edit"></i> @lang('app.edit')
             </a>
         @endif
 
-        <a href="{{ route('dashboard.' . table_name() . '.show', $id) }}" class="dropdown-item primary load-form">
-            <i class="ft-edit"></i> @lang('app.show')
+        <a href="{{ route('dashboard.' . table_name() . '.show', $id) }}" class="dropdown-item info">
+            <i class="ft-eye"></i> @lang('app.show')
         </a>
 
         @if (auth()

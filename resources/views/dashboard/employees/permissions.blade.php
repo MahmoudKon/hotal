@@ -12,7 +12,7 @@
     </ul>
 
     {{-- Tabs Content [ Checkbox ] --}}
-    <div class="tab-content px-1 pt-1">
+    <div class="tab-content">
         @foreach (get_permissions() as $key => $permissions)
             <div class="tab-pane {{ $loop->first ? 'active' : '' }}" id="{{ $key }}" aria-labelledby="base-{{ $key }}">
                 @foreach ($permissions as $permission)

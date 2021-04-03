@@ -2,12 +2,14 @@
 
 namespace App\DataTables;
 
-use App\Models\Employee;
+use App\Models\User;
 use Yajra\DataTables\Html\Button;
 use Yajra\DataTables\Html\Column;
+use Yajra\DataTables\Html\Editor\Editor;
+use Yajra\DataTables\Html\Editor\Fields;
 use Yajra\DataTables\Services\DataTable;
 
-class EmployeesDataTable extends DataTable
+class UsersDataTable extends DataTable
 {
     /**
      * Build DataTable class.
@@ -19,25 +21,18 @@ class EmployeesDataTable extends DataTable
     {
         return datatables()
             ->eloquent($query)
-            ->addColumn('image', 'dashboard.includes.tables.image')
-            ->setRowClass('{{ ($id % 2 == 0) ? "danger" : "" }}')
-            ->setRowAttr(['align' => 'center'])
-            ->addColumn('role', function (Employee $employee) {
-                return '<div class="badge badge-' . ((in_array($employee->roles->first()->name, ['manager', 'admin']) ? 'success' : 'info')) . '">' . $employee->roles->first()->name . '</div>';
-            })
-            ->addColumn('action', 'dashboard.includes.buttons.buttons_table')
-            ->rawColumns(['image', 'action', 'role']);
+            ->addColumn('action', 'dashboard.includes.buttons.buttons_table');
     }
 
     /**
      * Get query source of dataTable.
      *
-     * @param \App\Models\Employee $model
+     * @param \App\Models\User $model
      * @return \Illuminate\Database\Eloquent\Builder
      */
-    public function query(Employee $model)
+    public function query(User $model)
     {
-        return $model->newQuery()->withOutSuperAdmin();
+        return $model->newQuery();
     }
 
     /**
@@ -72,11 +67,9 @@ class EmployeesDataTable extends DataTable
     {
         return [
             Column::make('id'),
-            Column::make('role')->title('Role'),
-            Column::make('username')->title( __('employees.username')),
-            Column::make('image')->title( __('employees.image')),
-            Column::make('email')->title( __('employees.email')),
-            Column::make('phone')->title( __('employees.phone')),
+            Column::make('username')->title( __('users.username')),
+            Column::make('email')->title( __('users.email')),
+            Column::make('phone')->title( __('users.phone')),
             Column::make('created_at')->title( __('app.created_at')),
             Column::computed('action')
                     ->exportable(false)
@@ -93,6 +86,6 @@ class EmployeesDataTable extends DataTable
      */
     protected function filename()
     {
-        return 'Employees_' . date('YmdHis');
+        return 'Users_' . date('YmdHis');
     }
 }

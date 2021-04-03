@@ -4,40 +4,25 @@ namespace App\Http\Controllers\Dashboard;
 
 use App\DataTables\EmployeesDataTable;
 use App\Http\Controllers\DashboardController;
+use App\Http\Requests\EmployeeRequest;
 use App\Models\Employee;
 use App\Models\Permission;
 use Illuminate\Http\Request;
 
 class EmployeesController extends DashboardController
 {
-    public function index (EmployeesDataTable $dataTable)
+    public function __construct(Employee $model, EmployeesDataTable $dataTable)
+    {
+        parent::__construct($model, $dataTable);
+    } // End of Construct Method
+
+    public function store (EmployeeRequest $request)
     {
         try {
-            if (request()->ajax())
-                return $dataTable->render('dashboard.includes.tables.datatable');
-
-            $count = Employee::whereRoleIs(['admin', 'manager', 'employee'])->count();
-            return view('dashboard.includes.pages.index', compact('count'));
-        } catch (\Exception $e) {
-            return response()->json($e->getMessage(), 404);
-        }
-    } // end of index method [ show all records ]
-
-    public function create ()
-    {
-        try {
-            return view('dashboard.includes.pages.create');
-        } catch (\Exception $e) {
-            toastr()->error($e->getMessage(), 'Exception');
-            return redirect()->back();
-            // return response()->json($e->getMessage(), 404);
-        }
-    } // end of created method [ create new record ]
-
-    public function store (Request $request)
-    {
-        try {
-            dd($request->all());
+            if (Employee::create($request->except(['id', 'password_confirmation']))) {
+                toastr()->success('Employee Created Successfully', 'Create');
+                return redirect()->route('dashboard.employees.index');
+            }
         } catch (\Exception $e) {
             toastr()->error($e->getMessage(), 'Exception');
             return redirect()->back();
@@ -45,50 +30,21 @@ class EmployeesController extends DashboardController
         }
     } // end of store method [ store the new record data ]
 
-    public function edit (Employee $employee)
+    public function update (EmployeeRequest $request, Employee $employee)
     {
         try {
-            return view('dashboard.includes.pages.edit', ['row' => $employee]);
-        } catch (\Exception $e) {
-            toastr()->error($e->getMessage(), 'Exception');
-            return redirect()->back();
-            // return response()->json($e->getMessage(), 404);
-        }
-    } // end of edit method [ edit record data ]
+            if(isset($request->image) && $employee->image != 'default.jpg')
+                unlink(public_path('uploads/images/employees/' . $employee->image));
 
-    public function update (Request $request, Employee $employee)
-    {
-        try {
-            dd($employee);
+            $employee->update($request->except(['id', 'password_confirmation']));
+            toastr()->success('Employee Updated Successfully', 'Update');
+            return redirect()->route('dashboard.employees.index');
         } catch (\Exception $e) {
             toastr()->error($e->getMessage(), 'Exception');
             return redirect()->back();
             // return response()->json($e->getMessage(), 404);
         }
     } // end of update method [ save the new data ]
-
-    public function show (Employee $employee)
-    {
-        try {
-            dd('show');
-        } catch (\Exception $e) {
-            toastr()->error($e->getMessage(), 'Exception');
-            return redirect()->back();
-            // return response()->json($e->getMessage(), 404);
-        }
-    } // end of show method [ show the record data ]
-
-    public function destroy (Employee $employee)
-    {
-        try {
-            if ($employee->delete()) {
-                return response()->json(['message' => 'Deleted Successfuly', 'title' => 'Deleted']);
-            }
-        } catch (\Exception $e) {
-            return response()->json(['message' => $e->getMessage(), 'title' => 'Exception'], 404);
-            // return response()->json($e->getMessage(), 404);
-        }
-    } // end of destroy method [ destroy the record data ]
 
     public function permissions (Request $request)
     {

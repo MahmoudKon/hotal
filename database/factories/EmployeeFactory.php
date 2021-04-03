@@ -21,16 +21,16 @@ class EmployeeFactory extends Factory
      */
     public function definition ()
     {
+        $role = ['admin', 'manager', 'employee'];
         return [
-            'image'       => $this->faker->image(public_path('uploads/images/employees'), 200, 200, 'Employees', false),
             'username'    => $this->faker->unique()->userName(),
             'email'       => $this->faker->unique()->safeEmail(),
             'phone'       => $this->faker->unique()->phoneNumber(),
             'address'     => $this->faker->address(),
             'birthday'    => $this->faker->date('Y-m-d', '2000'),
             'personal_id' => $this->faker->unique()->ean13() . $this->faker->randomDigitNotNull(),
-            'emp_id'      => $this->faker->unique()->ean8(),
-            'created_by'  => 1,
+            'password'    => 123,
+            'role'        => $role[rand(0,2)],
         ];
     }
 }

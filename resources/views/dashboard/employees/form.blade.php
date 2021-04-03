@@ -1,119 +1,167 @@
 <div class="row">
-    {{-- INPUT [ USER NAME, EMAIL ] --}}
-    <div class="col-md-6">
-        {{-- User Name Input --}}
-        <div class="form-group">
-            <div class="input-group">
-                <div class="input-group-prepend">
-                    <span class="input-group-text"> <i class="fa fa-user"></i> </span>
+    {{-- ID --}}
+    <input type="hidden" name="id" value="{{ $row->id ?? '' }}">
+    {{-- INPUT [ USER NAME , EMAIL , PERSONAL ID , ADDRESS , PHONE, PASSWORD, CONFIRMED PASSWORD , Employee ID , Birthday ] --}}
+    <div class="col-md-9">
+        <div class="row">
+            <div class="col-md-6">
+                {{-- User Name Input --}}
+                <div class="form-group">
+                    <div class="input-group">
+                        <div class="input-group-prepend">
+                            <span class="input-group-text"> <i class="fa fa-user"></i> </span>
+                        </div>
+                        <input type="text" name="username" class="form-control" placeholder="@lang('employees.username')"
+                            value="{{ old('username') ?? $row->username }}" minlength="5" maxlength="25" required>
+                    </div>
+                    @error('username') <span class="red"> {{ $message }} </span> @enderror
                 </div>
-                <input type="text" name="username" class="form-control" placeholder="@lang('employees.username')" minlength=5 maxlength=25
-                    value="{{ $row->username ?? '' }}">
             </div>
-            <span id="username_error" class="red error"></span>
+
+            <div class="col-md-6">
+                <!-- Email Input -->
+                <div class="form-group">
+                    <div class="input-group">
+                        <div class="input-group-prepend">
+                            <span class="input-group-text"> <i class="fa fa-at"></i> </span>
+                        </div>
+                        <input type="email" name="email" class="form-control" placeholder="@lang('employees.email')"
+                            value="{{ old('email') ?? $row->email }}" required>
+                    </div>
+                    @error('email') <span class="red"> {{ $message }} </span> @enderror
+                </div>
+            </div>
+
+            <div class="col-md-6">
+                <!-- Phone Input -->
+                <div class="form-group">
+                    <div class="input-group">
+                        <div class="input-group-prepend">
+                            <span class="input-group-text"> <i class="fa fa-mobile-alt"></i> </span>
+                        </div>
+                        <input type="text" name="phone" class="form-control" placeholder="@lang('employees.phone')"
+                            value="{{ old('phone') ?? $row->phone }}" minlength="11" maxlength="14" required>
+                    </div>
+                    @error('phone') <span class="red"> {{ $message }} </span> @enderror
+                </div>
+            </div>
+
+            <div class="col-md-6">
+                <!-- Address Input -->
+                <div class="form-group">
+                    <div class="input-group">
+                        <div class="input-group-prepend">
+                            <span class="input-group-text"> <i class="fa fa-home"></i> </span>
+                        </div>
+                        <input type="text" name="address" class="form-control" placeholder="@lang('employees.address')"
+                            value="{{ old('address') ?? $row->address }}" minlength="10" maxlength="100" required>
+                    </div>
+                    @error('address') <span class="red"> {{ $message }} </span> @enderror
+                </div>
+            </div>
+
+            <div class="col-md-6">
+                <!-- Password Input -->
+                <div class="form-group">
+                    <div class="input-group">
+                        <div class="input-group-prepend">
+                            <span class="input-group-text"> <i class="fas fa-eye toggle-password"></i> </span>
+                        </div>
+                        <input type="password" name="password" class="form-control" placeholder="@lang('employees.password')" autocomplete min="3"
+                            max="50" {{ isset($row) ? '' : 'required' }} value="{{ old('password') ?? '' }}">
+                    </div>
+                    @error('password') <span class="red"> {{ $message }} </span> @enderror
+                </div>
+            </div>
+
+            <div class="col-md-6">
+                <!-- Confirmed Password Input -->
+                <div class="form-group">
+                    <div class="input-group">
+                        <div class="input-group-prepend">
+                            <span class="input-group-text"> <i class="fa fa-eye toggle-password"></i> </span>
+                        </div>
+                        <input type="password" name="password_confirmation" class="form-control"
+                            placeholder="@lang('employees.password_confirmation')" autocomplete min="3" max="50"
+                            {{ isset($row) ? '' : 'required' }} value="{{ old('password_confirmation') ?? '' }}">
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-md-6">
+                {{-- Personal ID Input --}}
+                <div class="form-group">
+                    <div class="input-group">
+                        <div class="input-group-prepend">
+                            <span class="input-group-text"> <i class="fa fa-user"></i> </span>
+                        </div>
+                        <input type="number" name="personal_id" class="form-control" placeholder="@lang('employees.personal_id')"
+                            value="{{ old('personal_id') ?? $row->personal_id }}" min="10000000000000" max="99999999999999" required>
+                    </div>
+                    @error('personal_id') <span class="red"> {{ $message }} </span> @enderror
+                </div>
+            </div>
+
+            @if (isset($row->emp_id))
+                <div class="col-md-6">
+                    <!-- Employee ID Input -->
+                    <div class="form-group">
+                        <div class="input-group">
+                            <div class="input-group-prepend">
+                                <span class="input-group-text"> <i class="fa fa-id-card"></i> </span>
+                            </div>
+                            <input class="form-control" value="{{ old('emp_id') ?? $row->emp_id }}" disabled>
+                        </div>
+                        @error('emp_id') <span class="red"> {{ $message }} </span> @enderror
+                    </div>
+                </div>
+            @endif
+
+            <div class="col-md-6">
+                <!-- Birthday Input -->
+                <div class="form-group">
+                    <div class="input-group">
+                        <div class="input-group-prepend">
+                            <span class="input-group-text"> <i class="fa fa-birthday-cake"></i> </span>
+                        </div>
+                        <input type="date" name="birthday" class="form-control" max="2015-12-12" min="1990-01-01"
+                            placeholder="@lang('employees.birthday')" value="{{ old('birthday') ?? $row->birthday }}" required>
+                    </div>
+                    @error('birthday') <span class="red"> {{ $message }} </span> @enderror
+                </div>
+            </div>
+
+            <div class="col-md-6">
+                {{-- SELECT ROLE --}}
+                <div class="form-group">
+                    <div class="input-group">
+                        <div class="input-group-prepend">
+                            <span class="input-group-text"> <i class="fa fa-briefcase"></i> </span>
+                        </div>
+                        <select name='role' class="custom-select" id="roles" required>
+                            <option> Select Role </option>
+                            <optgroup label="@lang('employees.job')">
+                                @foreach (App\Models\Role::select('name', 'display_name')->get() as $role)
+                                    @if (!auth()
+        ->user()
+        ->hasRole($role->name) &&
+    $role->name != 'super_admin')
+                                        <option value="{{ $role->name }}"
+                                            {{ isset($row) ? (($row->hasRole($role->name) ? 'selected' : old('role') == $role->name) ? 'selected' : '') : '' }}>
+                                            {{ $role->display_name }}
+                                        </option>
+                                    @endif
+                                @endforeach
+                            </optgroup>
+                        </select>
+                    </div>
+                    @error('role') <span class="red"> {{ $message }} </span> @enderror
+                </div>
+            </div>
         </div>
 
-        <!-- Email Input -->
-        <div class="form-group">
-            <div class="input-group">
-                <div class="input-group-prepend">
-                    <span class="input-group-text"> <i class="fa fa-at"></i> </span>
-                </div>
-                <input type="email" name="email" class="form-control" placeholder="@lang('employees.email')" value="{{ $row->email ?? '' }}">
-            </div>
-            <span id="email_error" class="red error"></span>
-        </div>
     </div>
 
-    {{-- INPUT [ FULL NAME, ADDRESS ] --}}
-    <div class="col-md-6">
-        {{-- Full Name Input --}}
-        <div class="form-group">
-            <div class="input-group">
-                <div class="input-group-prepend">
-                    <span class="input-group-text"> <i class="fa fa-user"></i> </span>
-                </div>
-                <input type="text" name="full_name" class="form-control" placeholder="@lang('employees.full_name')" minlength=5 maxlength=50
-                    value="{{ $row->full_name ?? '' }}">
-            </div>
-            <span id="full_name_error" class="red error"></span>
-        </div>
-
-        <!-- Address Input -->
-        <div class="form-group">
-            <div class="input-group">
-                <div class="input-group-prepend">
-                    <span class="input-group-text"> <i class="fa fa-home"></i> </span>
-                </div>
-                <input type="text" name="address" class="form-control" placeholder="@lang('employees.address')" minlength=10 maxlength=100
-                    value="{{ $row->address ?? '' }}">
-            </div>
-            <span id="address_error" class="red error"></span>
-        </div>
-    </div>
-
-    {{-- INPUTS [ PHONE, PASSWORD, CONFIRMED PASSWORD ] --}}
-    <div class="col-md-5">
-        <!-- Phone Input -->
-        <div class="form-group">
-            <div class="input-group">
-                <div class="input-group-prepend">
-                    <span class="input-group-text"> <i class="fa fa-mobile-alt"></i> </span>
-                </div>
-                <input type="text" name="phone" class="form-control" placeholder="@lang('employees.phone')" value="{{ $row->phone ?? '' }}">
-            </div>
-            <span id="phone_error" class="red error"></span>
-        </div>
-
-        <!-- Password Input -->
-        <div class="form-group">
-            <div class="input-group">
-                <div class="input-group-prepend">
-                    <span class="input-group-text"> <i class="fas fa-eye toggle-password"></i> </span>
-                </div>
-                <input type="password" name="password" class="form-control" placeholder="@lang('employees.password')" autocomplete>
-            </div>
-            <span id="password_error" class="red error"></span>
-        </div>
-
-        <!-- Confirmed Password Input -->
-        <div class="form-group">
-            <div class="input-group">
-                <div class="input-group-prepend">
-                    <span class="input-group-text"> <i class="fa fa-eye toggle-password"></i> </span>
-                </div>
-                <input type="password" name="password_confirmation" class="form-control" placeholder="@lang('employees.password_confirmation')"
-                    autocomplete>
-            </div>
-        </div>
-    </div>
-
-    {{-- INPUTS [ PERSONAL ID, SELECT JOB, AGE ] --}}
-    <div class="col-md-4">
-        <!-- Personal ID Input -->
-        <div class="form-group">
-            <div class="input-group">
-                <div class="input-group-prepend">
-                    <span class="input-group-text"> <i class="fa fa-id-card"></i> </span>
-                </div>
-                <input type="number" name="personal_id" class="form-control" placeholder="@lang('employees.personal_id')" min=10000000000000
-                    max=99999999999999 size=14 value="{{ $row->personal_id ?? '' }}">
-            </div>
-            <span id="personal_id_error" class="red error"></span>
-        </div>
-
-        <!-- Age Input -->
-        <div class="form-group">
-            <div class="input-group">
-                <div class="input-group-prepend">
-                    <span class="input-group-text"> <i class="fa fa-birthday-cake"></i> </span>
-                </div>
-                <input type="number" name="age" class="form-control" placeholder="@lang('employees.age')" min=20 max=80
-                    value="{{ $row->age ?? '' }}">
-            </div>
-            <span id="age_error" class="red error"></span>
-        </div>
-    </div>
 
     {{-- INPUT [ IMAGE ] --}}
     <div class="col-md-3">
@@ -121,34 +169,18 @@
         <div class="form-group">
             <div id="image">
                 <input type="file" name="image" class="form-control image" placeholder="@lang('employees.image')">
-                <img src="{{ $row->image_path ?? asset('uploads/images/employees.employee.jpg') }}" class="img-border img-thumbnail">
+                <img src="{{ $row->image_path ?? asset('uploads/images/employees/default.jpg') }}" class="img-border img-thumbnail">
             </div>
-            <span id="image_error" class="red error"></span>
+            @error('image') <span class="red"> {{ $message }} </span> @enderror
         </div>
     </div>
 
+    {{-- INPUTS [ Role , Permissions ] --}}
     <div class="col-md-12">
-        {{-- SELECT job [ Role ] --}}
-        <div class="form-group">
-            <div class="input-group">
-                <div class="input-group-prepend">
-                    <span class="input-group-text"> <i class="fa fa-briefcase"></i> </span>
-                </div>
-                <select name='role' class="custom-select" id="roles">
-                    <optgroup label="@lang('employees.job')">
-                        @foreach (App\Models\Role::select('name')->get() as $role)
-                            <option value="{{ $role->name }}" {{ isset($row) ? ($row->hasRole($role->name) ? 'selected' : '') : '' }}>
-                                {{ $role->name }}
-                            </option>
-                        @endforeach
-                    </optgroup>
-                </select>
-                <span id="role_error" class="red error"></span>
-            </div>
-        </div>
-
-        {{-- SELECT job [ Role ] --}}
+        {{-- DISPLAY PERMISSIONS --}}
         <div class="card-content">
-            <div id="permisions"></div>
+            <div id="permisions">
+                @include('dashboard.employees.permissions')
+            </div>
         </div>
     </div>
