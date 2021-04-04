@@ -24,6 +24,8 @@ return [
     'delete'        => 'Delete',
     'update'        => 'Update',
     'create'        => 'Create',
+    'ban'           => 'Ban',
+    'unban '        => 'Unban',
     'read'          => 'Read',
     'reset'         => 'Reset',
     'back'          => 'Back',

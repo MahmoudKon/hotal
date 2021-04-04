@@ -1,9 +1,11 @@
 <?php
 
+use App\Http\Middleware\Banned;
 use Illuminate\Support\Facades\Artisan;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
 use Mcamara\LaravelLocalization\Facades\LaravelLocalization;
+use PHPUnit\TextUI\XmlConfiguration\Group;
 
 /*
 |--------------------------------------------------------------------------
@@ -27,12 +29,20 @@ Route::get('/clear', function () {
 
 Route::group([ 'prefix' => LaravelLocalization::setLocale(), 'middleware' => [ 'localeSessionRedirect', 'localizationRedirect', 'localeViewPath' ] ], function(){
 
-    Route::get('/', function () {
-        return view('welcome');
-    })->name('/');
+        // // This For Banned User
+    Route::get('banned', function () { return view('banned'); })->name('banned')->middleware('auth');
+
+    Route::middleware(Banned::class)->group(function () {
+
+        Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
+
+        Route::get('/', function () {
+            return view('welcome');
+        })->name('/');
+    });
+
 
 });
 
 Auth::routes();
 
-Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');

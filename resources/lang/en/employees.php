@@ -17,6 +17,7 @@ return [
     'created_by'                => 'Created By',
     'age'                       => 'Age',
     'job'                       => 'Job',
+    'role'                      => 'Role',
     'remember_me'               => 'Remember Me',
     'hello'                     => 'Hello',
 ];

@@ -24,7 +24,7 @@ class CreateEmployeesTable extends Migration
             $table->date('birthday');
             $table->unsignedBigInteger('personal_id')->unique();
             $table->unsignedBigInteger('emp_id')->nullable()->unique();
-            $table->boolean('banned')->default(0);
+            $table->boolean('banned')->default(false);
             $table->string('role')->default('employee');
             $table->unsignedBigInteger('created_by')->nullable();
             $table->rememberToken();

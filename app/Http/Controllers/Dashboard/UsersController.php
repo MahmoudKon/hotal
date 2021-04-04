@@ -52,5 +52,20 @@ class UsersController extends DashboardController
             // return response()->json($e->getMessage(), 404);
         }
     } // end of store method [ store the new record data ]
+
+    public function banned(User $user)
+    {
+        try {
+            $user->update(['banned' => !$user->banned]);
+            if ($user->banned)
+                return response()->json(['message' => 'Banned Successfuly', 'title' => 'Banned']);
+            else
+                return response()->json(['message' => 'Unbanned Successfuly', 'title' => 'Unbanned']);
+        } catch (\Exception $e) {
+            toastr()->error($e->getMessage(), 'Exception');
+            return redirect()->back();
+            // return response()->json($e->getMessage(), 404);
+        }
+    } // end of bannedspdate method [ Banned data ]
 }
 

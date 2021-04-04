@@ -20,11 +20,14 @@ class EmployeesDataTable extends DataTable
         return datatables()
             ->eloquent($query)
             ->addColumn('image', 'dashboard.includes.tables.image')
-            ->setRowClass('{{ ($id % 2 == 0) ? "danger" : "" }}')
-            ->setRowAttr(['align' => 'center'])
-            ->addColumn('role', function (Employee $employee) {
-                return '<div class="badge badge-' . ((in_array($employee->roles->first()->name, ['manager', 'admin']) ? 'success' : 'info')) . '">' . $employee->roles->first()->name . '</div>';
+            ->addColumn('role', function ($employee) {
+                return '<div class="badge badge-'.($employee->role=='admin'?"success":($employee->role=='manager'?"info":'primary')).'">' . $employee->role . '</div>';
             })
+            ->setRowClass('{{ $banned ? "warning" : "" }}')
+            // ->setRowAttr(['align' => 'center'])
+            // ->addColumn('role', function (Employee $employee) {
+            //     return '<div class="badge badge-' . ((in_array($employee->roles->first()->name, ['manager', 'admin']) ? 'success' : 'info')) . '">' . $employee->roles->first()->name . '</div>';
+            // })
             ->addColumn('action', 'dashboard.includes.buttons.buttons_table')
             ->rawColumns(['image', 'action', 'role']);
     }
@@ -72,7 +75,7 @@ class EmployeesDataTable extends DataTable
     {
         return [
             Column::make('id'),
-            Column::make('role')->title('Role'),
+            Column::make('role')->title( __('employees.role')),
             Column::make('username')->title( __('employees.username')),
             Column::make('image')->title( __('employees.image')),
             Column::make('email')->title( __('employees.email')),

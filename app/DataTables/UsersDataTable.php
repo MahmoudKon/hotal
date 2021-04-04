@@ -21,6 +21,7 @@ class UsersDataTable extends DataTable
     {
         return datatables()
             ->eloquent($query)
+            ->setRowClass('{{ $banned ? "warning" : "" }}')
             ->addColumn('action', 'dashboard.includes.buttons.buttons_table');
     }
 

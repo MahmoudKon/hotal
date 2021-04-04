@@ -53,7 +53,7 @@ class Employee extends Authenticatable
 
     public function scopewithOutSuperAdmin($query)
     {
-        return $query->withOutAuth()->whereRoleIs(['admin', 'manager', 'employee']);
+        return $query->withOutAuth()->where('role', '<>', 'super_admin');
     } // Return all Employees With Out The Role Super Admin
 
 

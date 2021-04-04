@@ -39,38 +39,26 @@
 
     $('body').on('click', '.delete_record', function(e) {
         e.preventDefault();
-        let form = $(this).find('form');
-        swal({
-            text: 'are you sure to delete this record ?',
-            title: 'DELETEING',
-            icon: "warning",
-            buttons: [
-                'no, cancel',
-                'yes, sure'
-            ],
-            dangerMode: true,
-        }).then(function(isConfirm) {
-            if (isConfirm) {
-                $.ajax({
-                    url: form.attr('action'),
-                    type: "post",
-                    data: form.serialize(),
-                    beforeSend: function() { $('body').addClass('loading-animation'); },
-                    success: function(data, textStatus, jqXHR) {
-                        toastr.success(data.message, data.title);
-                        rows();
-                    },
-                    error: function(jqXHR) {
-                        if (jqXHR.readyState == 0)
-                            return false;
-                        toastr.error(jqXHR.responseJSON.message);
-                    },
-                });
-            } else {
-                toastr.info('canceled', 'DELETING');
-            }
-        });
+        let form = $(this).find('form'),
+            message = 'are you sure to delete this record ?',
+            title = 'Deleteing';
+        button_action(message, title, form);
     }); // AJAX CODE TO DELETE THE RECORD AND LOAD THE DATA TABLE
+
+    $('body').on('click', '.ban_record', function(e) {
+        e.preventDefault();
+        let form = $(this).find('form'),
+            ban = $(this).data('ban'),
+            message, title;
+        if (ban) {
+            message = 'are you sure to unban this record ?';
+            title = 'Unbunned';
+        } else {
+            message = 'are you sure to ban this record ?';
+            title = 'bunned';
+        }
+        button_action(message, title, form);
+    }); // AJAX CODE TO ban THE RECORD AND LOAD THE DATA TABLE
 
     $('body').on('change', '#roles', function() {
         $('#permisions').slideUp(200);
@@ -105,5 +93,39 @@
             reader.readAsDataURL(this.files[0]);
         }
     }); // PREVIEW THE IMAGE WHEN SELECTED
+
+
+    function button_action(message, title, form) {
+        swal({
+            text: message,
+            title: title,
+            icon: "warning",
+            buttons: [
+                'no, cancel',
+                'yes, sure'
+            ],
+            dangerMode: true,
+        }).then(function(isConfirm) {
+            if (isConfirm) {
+                $.ajax({
+                    url: form.attr('action'),
+                    type: "post",
+                    data: form.serialize(),
+                    beforeSend: function() { $('body').addClass('loading-animation'); },
+                    success: function(data, textStatus, jqXHR) {
+                        toastr.success(data.message, data.title);
+                        rows();
+                    },
+                    error: function(jqXHR) {
+                        if (jqXHR.readyState == 0)
+                            return false;
+                        toastr.error(jqXHR.responseJSON.message);
+                    },
+                });
+            } else {
+                toastr.info('canceled', title);
+            }
+        });
+    }
 
 })(window);

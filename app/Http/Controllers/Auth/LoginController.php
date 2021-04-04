@@ -12,6 +12,7 @@ class LoginController extends LoginSystemController
 
     public function __construct()
     {
+        // dd('ds');
         parent::__construct($this->guard, $this->redirect);
     }
 }
