@@ -26,6 +26,10 @@
 </div>
 {{-- .\ CONTENT --}}
 
+{{-- BREADCRUMB --}}
+@include('layouts.includes.dashboard.modal')
+{{-- .\ BREADCRUMB --}}
+
 {{-- FOOTER --}}
 @include('layouts.includes.dashboard.footer')
 {{-- .\ FOOTER --}}

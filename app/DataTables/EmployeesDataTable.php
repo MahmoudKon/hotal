@@ -21,15 +21,16 @@ class EmployeesDataTable extends DataTable
             ->eloquent($query)
             ->addColumn('image', 'dashboard.includes.tables.image')
             ->addColumn('role', function ($employee) {
-                return '<div class="badge badge-'.($employee->role=='admin'?"success":($employee->role=='manager'?"info":'primary')).'">' . $employee->role . '</div>';
+                return '<div class="badge badge-' . ($employee->role == 'admin' ? "success" : ($employee->role == 'manager' ? "info" : 'primary')) . '">' . $employee->role . '</div>';
             })
             ->setRowClass('{{ $banned ? "warning" : "" }}')
             // ->setRowAttr(['align' => 'center'])
             // ->addColumn('role', function (Employee $employee) {
             //     return '<div class="badge badge-' . ((in_array($employee->roles->first()->name, ['manager', 'admin']) ? 'success' : 'info')) . '">' . $employee->roles->first()->name . '</div>';
             // })
+            ->addColumn('banned', 'dashboard.employees.banned_button')
             ->addColumn('action', 'dashboard.includes.buttons.buttons_table')
-            ->rawColumns(['image', 'action', 'role']);
+            ->rawColumns(['image', 'action', 'banned', 'role']);
     }
 
     /**
@@ -58,11 +59,11 @@ class EmployeesDataTable extends DataTable
             ->lengthMenu([5, 10, 25, 50, 100])
             ->orderBy(0)
             ->buttons(
-                Button::make('csv')->text( __('app.csv') ),
-                Button::make('excel')->text( __('app.excel') ),
-                Button::make('copy')->text( __('app.copy') ),
-                Button::make('pdf')->text( __('app.pdf') ),
-                Button::make('print')->text( __('app.print') ),
+                Button::make('csv')->text(__('app.csv')),
+                Button::make('excel')->text(__('app.excel')),
+                Button::make('copy')->text(__('app.copy')),
+                Button::make('pdf')->text(__('app.pdf')),
+                Button::make('print')->text(__('app.print')),
             );
     }
 
@@ -75,17 +76,18 @@ class EmployeesDataTable extends DataTable
     {
         return [
             Column::make('id'),
-            Column::make('role')->title( __('employees.role')),
-            Column::make('username')->title( __('employees.username')),
-            Column::make('image')->title( __('employees.image')),
-            Column::make('email')->title( __('employees.email')),
-            Column::make('phone')->title( __('employees.phone')),
-            Column::make('created_at')->title( __('app.created_at')),
+            Column::make('role')->title(__('employees.role')),
+            Column::make('username')->title(__('employees.username')),
+            Column::make('image')->title(__('employees.image'))->searchable(false)->orderable(false),
+            Column::make('email')->title(__('employees.email')),
+            Column::make('phone')->title(__('employees.phone')),
+            Column::make('banned')->title(__('employees.banned'))->width(30)->addClass('text-center'),
             Column::computed('action')
-                    ->exportable(false)
-                    ->printable(false)
-                    ->width(50)
-                    ->addClass('text-center'),
+                ->exportable(false)
+                ->printable(false)
+                ->width(50)
+                ->addClass('text-center')
+                ->title(__('app.action')),
         ];
     }
 

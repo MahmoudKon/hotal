@@ -20,5 +20,8 @@ class DatabaseSeeder extends Seeder
         $this->call(EmployeeSeeder::class);
         \App\Models\Employee::factory(20)->create();
         \App\Models\User::factory(20)->create();
+        \App\Models\Floor::factory(3)->create();
+        \App\Models\Room::factory(10)->create();
+        \App\Models\RoomImage::factory(20)->create();
     }
 }

@@ -22,7 +22,9 @@ class UsersDataTable extends DataTable
         return datatables()
             ->eloquent($query)
             ->setRowClass('{{ $banned ? "warning" : "" }}')
-            ->addColumn('action', 'dashboard.includes.buttons.buttons_table');
+            ->addColumn('banned', 'dashboard.users.banned_button')
+            ->addColumn('action', 'dashboard.includes.buttons.buttons_table')
+            ->rawColumns(['action', 'banned']);
     }
 
     /**
@@ -51,11 +53,11 @@ class UsersDataTable extends DataTable
             ->lengthMenu([5, 10, 25, 50, 100])
             ->orderBy(0)
             ->buttons(
-                Button::make('csv')->text( __('app.csv') ),
-                Button::make('excel')->text( __('app.excel') ),
-                Button::make('copy')->text( __('app.copy') ),
-                Button::make('pdf')->text( __('app.pdf') ),
-                Button::make('print')->text( __('app.print') ),
+                Button::make('csv')->text(__('app.csv')),
+                Button::make('excel')->text(__('app.excel')),
+                Button::make('copy')->text(__('app.copy')),
+                Button::make('pdf')->text(__('app.pdf')),
+                Button::make('print')->text(__('app.print')),
             );
     }
 
@@ -68,15 +70,16 @@ class UsersDataTable extends DataTable
     {
         return [
             Column::make('id'),
-            Column::make('username')->title( __('users.username')),
-            Column::make('email')->title( __('users.email')),
-            Column::make('phone')->title( __('users.phone')),
-            Column::make('created_at')->title( __('app.created_at')),
+            Column::make('username')->title(__('users.username')),
+            Column::make('email')->title(__('users.email')),
+            Column::make('phone')->title(__('users.phone')),
+            Column::make('banned')->title(__('users.banned'))->width(30)->addClass('text-center'),
             Column::computed('action')
-                    ->exportable(false)
-                    ->printable(false)
-                    ->width(50)
-                    ->addClass('text-center'),
+                ->exportable(false)
+                ->printable(false)
+                ->width(50)
+                ->addClass('text-center')
+                ->title(__('app.action')),
         ];
     }
 

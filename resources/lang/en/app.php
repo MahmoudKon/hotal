@@ -25,7 +25,7 @@ return [
     'update'        => 'Update',
     'create'        => 'Create',
     'ban'           => 'Ban',
-    'unban '        => 'Unban',
+    'unban'        => 'Unban',
     'read'          => 'Read',
     'reset'         => 'Reset',
     'back'          => 'Back',

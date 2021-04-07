@@ -14,18 +14,7 @@ class UsersController extends DashboardController
         parent::__construct($model, $dataTable);
     } // End of Construct Method
 
-    public function create ()
-    {
-        try {
-            return view('dashboard.includes.pages.create');
-        } catch (\Exception $e) {
-            toastr()->error($e->getMessage(), 'Exception');
-            return redirect()->back();
-            // return response()->json($e->getMessage(), 404);
-        }
-    } // end of created method [ create new record ]
-
-    public function store (UserRequest $request)
+    public function store(UserRequest $request)
     {
         try {
             if (User::create($request->except(['id', 'password_confirmation']))) {
@@ -39,7 +28,7 @@ class UsersController extends DashboardController
         }
     } // end of store method [ store the new record data ]
 
-    public function update (UserRequest $request, User $user)
+    public function update(UserRequest $request, User $user)
     {
         try {
             if ($user->update($request->except(['id', 'password_confirmation']))) {
@@ -68,4 +57,3 @@ class UsersController extends DashboardController
         }
     } // end of bannedspdate method [ Banned data ]
 }
-

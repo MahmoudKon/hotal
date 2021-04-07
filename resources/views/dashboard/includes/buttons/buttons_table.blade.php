@@ -6,38 +6,22 @@
     <span aria-labelledby="btnSearchDrop2" class="dropdown-menu mt-1 dropdown-menu-right" x-placement="top-end"
         style="position: absolute; transform: translate3d(0px, 23px, 10px); top: 0px; right: -85px; will-change: transform;">
 
-        @if (auth()
-        ->user()
-        ->hasPermission('update-' . table_name()))
-            <a href="{{ route('dashboard.' . table_name() . '.edit', $id) }}" class="dropdown-item primary">
-                <i class="ft-edit"></i> @lang('app.edit')
-            </a>
-        @endif
-
-        <a href="{{ route('dashboard.' . table_name() . '.show', $id) }}" class="dropdown-item info">
-            <i class="ft-eye"></i> @lang('app.show')
+        @if (auth()->user()->hasPermission('update-' . table_name()))
+        <a href="{{ route('dashboard.' . table_name() . '.edit', $id) }}" class="dropdown-item primary load-form">
+            <i class="ft-edit"></i> @lang('app.edit')
         </a>
-
-        @if (auth()
-        ->user()
-        ->hasPermission('delete-' . table_name()))
-            <a class="dropdown-item btn bg-transparent danger delete_record">
-                <i class="ft-trash"></i> @lang('app.delete')
-                <form action="{{ route('dashboard.' . table_name() . '.destroy', $id) }}" method="POST" style="display: none;">
-                    @csrf
-                    @method('delete')
-                </form>
-            </a>
         @endif
 
-        @if (in_array(table_name(), ['employees', 'users']))
-            <a class="dropdown-item btn bg-transparent warning ban_record" href="{{ route('dashboard.' . table_name() . '.banned', $id) }}"
-                data-ban="{{ $banned }}">
-                <i class="fas fa-ban"></i> {{ $banned ? __('app.unban') : __('app.ban') }}
-                <form action="{{ route('dashboard.' . table_name() . '.banned', $id) }}" method="POST" style="display: none;">
-                    @csrf
-                </form>
-            </a>
+        @if (auth()->user()->hasPermission('delete-' . table_name()))
+        <a class="dropdown-item btn bg-transparent danger delete_record">
+            <i class="ft-trash"></i> @lang('app.delete')
+            <form action="{{ route('dashboard.' . table_name() . '.destroy', $id) }}" method="POST"
+                style="display: none;">
+                @csrf
+                @method('delete')
+            </form>
+        </a>
         @endif
+
     </span>
 </span>

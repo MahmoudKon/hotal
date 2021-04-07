@@ -27,6 +27,24 @@
                 </a>
             </li>
             {{-- .\ Users Link --}}
+
+            {{-- Floors Link --}}
+            <li class="nav-item {{ in_url('floors') ? 'active' : '' }}">
+                <a href="{{ route('dashboard.floors.index') }}">
+                    <i class="fa fa-user"></i>
+                    <span class="menu-title mx-1"> @lang('app.floors') </span>
+                </a>
+            </li>
+            {{-- .\ Floors Link --}}
+
+            {{-- Rooms Link --}}
+            <li class="nav-item {{ in_url('rooms') ? 'active' : '' }}">
+                <a href="{{ route('dashboard.rooms.index') }}">
+                    <i class="fa fa-user"></i>
+                    <span class="menu-title mx-1"> @lang('app.rooms') </span>
+                </a>
+            </li>
+            {{-- .\ Rooms Link --}}
         </ul>
     </div>
 </div>

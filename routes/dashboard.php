@@ -4,7 +4,7 @@ use App\Http\Middleware\Banned;
 use Illuminate\Support\Facades\Route;
 use Mcamara\LaravelLocalization\Facades\LaravelLocalization;
 
-Route::group([ 'prefix' => LaravelLocalization::setLocale(), 'middleware' => [ 'localeSessionRedirect', 'localizationRedirect', 'localeViewPath' ] ], function(){
+Route::group(['prefix' => LaravelLocalization::setLocale(), 'middleware' => ['localeSessionRedirect', 'localizationRedirect', 'localeViewPath']], function () {
     Route::group(['prefix' => 'dashboard', 'as' => 'dashboard.'], function () {
 
         // Login Routes
@@ -22,9 +22,17 @@ Route::group([ 'prefix' => LaravelLocalization::setLocale(), 'middleware' => [ '
 
             Route::resource('users', 'UsersController');
             Route::post('users/{user}/banned', 'UsersController@banned')->name('users.banned');
+
+            Route::resource('floors', 'FloorsController');
+            Route::post('floors/{floor}/is_available', 'FloorsController@is_available')->name('floors.is_available');
+
+            Route::resource('rooms', 'RoomsController');
+            Route::post('rooms/{room}/is_available', 'RoomsController@is_available')->name('rooms.is_available');
         }); // end of grouping the auth of middleware
 
         // // This For Banned Employees
-        Route::get('banned', function () { return view('banned'); })->name('banned')->middleware('auth:employee');
+        Route::get('banned', function () {
+            return view('banned');
+        })->name('banned')->middleware('auth:employee');
     }); // end of grouping the prefix and as
 }); // end of grouping the lcalization middleware

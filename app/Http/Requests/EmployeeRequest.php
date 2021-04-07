@@ -33,7 +33,7 @@ class EmployeeRequest extends FormRequest
             'birthday'              => 'required|before:today',
             'password'              => $id . 'min:3|max:25|confirmed',
             'password_confirmation' => 'same:password',
-            'image'                 => 'image|mimes:png,jpg,jpeg,gif,size:2020',
+            'image'                 => 'image|mimes:png,jpg,jpeg,gif,size:4020',
             'role'                  => 'required|exists:roles,name'
         ];
     }
