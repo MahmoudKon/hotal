@@ -77,6 +77,31 @@
         <span class="error red" id="info_error"></span>
     </div>
 
+    {{-- INPUT [ IMAGE ] --}}
+    <div class="col-md-12">
+        <!-- Image Input -->
+        <div class="form-group">
+            <label>Upload Image :</label>
+            <div id="image">
+                <input type="file" name="image[]" multiple class="form-control image"
+                    placeholder="@lang('employees.image')" value="{{ isset($row) ? $row->image : old('image') }}">
+                <div id="images">
+                    @if (isset($row))
+                    @foreach ($row->images as $image)
+                    <img src="{{ $image->image_path }}" class="img-border img-thumbnail">
+                    @endforeach
+                    @else
+                    <img src="{{ asset('uploads/images/employees/default.jpg') }}"
+                        class="img-border img-thumbnail background">
+                    @endif
+
+
+                </div>
+            </div>
+            <span class="error red" id="image_error"></span>
+        </div>
+    </div>
+
 
     <script type="text/javascript" src="{{ asset('assets/dashboard/vendors/js/editors/ckeditor/ckeditor.js') }}">
     </script>
@@ -84,10 +109,10 @@
     <script>
         $(function() {
             CKEDITOR.replace( '.ckeditor' );
-                // setup the repeater
-                $('.repeater').repeater();
-                //get the values of the inputs as a formatted object
-                $('.repeater').repeaterVal();
-                $("#wizard").steps();
+            // setup the repeater
+            $('.repeater').repeater();
+            //get the values of the inputs as a formatted object
+            $('.repeater').repeaterVal();
+            $("#wizard").steps();
         });
     </script>

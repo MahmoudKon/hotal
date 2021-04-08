@@ -60,7 +60,28 @@
     cursor: pointer;
 }
 
-#image>img {
+#image>div#images {
+    width: 100%;
+    max-height: 283px;
+    border: 1px solid #4a494961;
+    padding: 5px;
+    background: #d9dad9;
+    border-radius: 5px;
+}
+
+#image>div#images img {
+    width: 150px;
+    display: inline-block;
+    margin: 10px;
+}
+
+#image>div#images img:hover ::after {
+    width: 50px;
+    height: 50px;
+    background-color: #f00;
+}
+
+#image>div#images .background {
     width: 100%;
     max-height: 283px;
 }

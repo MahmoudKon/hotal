@@ -173,16 +173,18 @@
 
     </div>
 
-
     {{-- INPUT [ IMAGE ] --}}
     <div class="col-md-3">
         <!-- Image Input -->
         <div class="form-group">
+            <label>Upload Image :</label>
             <div id="image">
                 <input type="file" name="image" class="form-control image" placeholder="@lang('employees.image')"
                     value="{{ isset($row) ? $row->image : old('image') }}">
-                <img src="{{ isset($row) ? $row->image_path : asset('uploads/images/employees/default.jpg') }}"
-                    class="img-border img-thumbnail">
+                <div id="images">
+                    <img src="{{ isset($row) ? $row->image_path : asset('uploads/images/employees/default.jpg') }}"
+                        class="img-border img-thumbnail background">
+                </div>
             </div>
             <span class="error red" id="image_error"></span>
         </div>

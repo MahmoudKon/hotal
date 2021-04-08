@@ -12,7 +12,7 @@
                 <div id="load-datatables"></div>
             </div>
         </div>
-    </section>
-    <!--/ Description -->
+
+        <!--/ Description -->
 </div>
 @endsection

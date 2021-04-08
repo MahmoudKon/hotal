@@ -29,6 +29,7 @@ class RoomRequest extends FormRequest
             'people_count'  => 'required|integer|between:2,9',
             'price'         => 'required',
             'floor_id'      => 'required|exists:floors,id',
+            'image.*'       => 'image|mimes:png,jpg,jpeg',
         ];
     }
 }

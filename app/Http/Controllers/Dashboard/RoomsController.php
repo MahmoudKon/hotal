@@ -3,10 +3,12 @@
 namespace App\Http\Controllers\Dashboard;
 
 use App\DataTables\RoomsDataTable;
+use Intervention\Image\Facades\Image;
 use App\Http\Controllers\DashboardController;
 use App\Http\Requests\RoomRequest;
 use App\Models\Floor;
 use App\Models\Room;
+use App\Models\RoomImage;
 
 class RoomsController extends DashboardController
 {
@@ -25,7 +27,20 @@ class RoomsController extends DashboardController
     public function store(RoomRequest $request)
     {
         try {
-            if (Room::create($request->except(['id', 'image']))) {
+            if ($room = Room::create($request->except(['id', 'image']))) {
+                if ($request->image) {
+                    foreach ($request->image as $image) {
+                        image::make($image)
+                            ->resize(150, null, function ($constraint) {
+                                $constraint->aspectRatio();
+                            })
+                            ->save(public_path('uploads/images/rooms/' . $image->hashName()), 60);
+                        RoomImage::create([
+                            'image' => $image->hashName(),
+                            'room_id' => $room->id,
+                        ]);
+                    }
+                }
                 toastr()->success('Room Created Successfully', 'Create');
                 return redirect()->route('dashboard.rooms.index');
             }
@@ -40,6 +55,19 @@ class RoomsController extends DashboardController
     {
         try {
             $room->update($request->except(['id', 'image']));
+            if ($request->image) {
+                foreach ($request->image as $image) {
+                    image::make($image)
+                        ->resize(150, null, function ($constraint) {
+                            $constraint->aspectRatio();
+                        })
+                        ->save(public_path('uploads/images/rooms/' . $image->hashName()), 60);
+                    RoomImage::create([
+                        'image' => $image->hashName(),
+                        'room_id' => $room->id,
+                    ]);
+                }
+            }
             toastr()->success('Room Updated Successfully', 'Update');
             return redirect()->route('dashboard.rooms.index');
         } catch (\Exception $e) {

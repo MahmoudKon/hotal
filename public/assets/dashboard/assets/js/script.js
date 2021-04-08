@@ -103,17 +103,6 @@
         $('#permisions').slideUp(200).empty();
     }); // TO REMOVE THE PERMISSIONS SECTION WHEN RESET THE FORM
 
-    $("body").on('change', '#image input[type=file]', function() {
-        let img = $(this).parent('#image').find('img');
-        if (this.files && this.files[0]) {
-            var reader = new FileReader();
-            reader.onload = function(e) {
-                img.attr('src', e.target.result);
-            }
-            reader.readAsDataURL(this.files[0]);
-        }
-    }); // PREVIEW THE IMAGE WHEN SELECTED
-
     function button_action(message, title, route, data = null) {
         swal({
             text: message,
@@ -200,6 +189,7 @@
             error: function(jqXHR) {
                 if (jqXHR.status == 422) {
                     $.each(jqXHR.responseJSON.errors, function (key, val) {
+                        if(key.split('.')[0] == 'image') {key = 'image'}
                         form.find(`#${key.replace('.', '_')}_error`).text(val[0]);
                     });
                 } else {
@@ -213,5 +203,25 @@
 
 
 
+
+    $("body").on('change', '#image input[type=file]', function () {
+        let input = $(this);
+        let img = input.parent('#image').find('#images');
+
+        img.find('.background').remove();
+
+        if (this.files && this.files[0]) {
+            for (let i = 0; i < this.files.length; i++) {
+                var reader = new FileReader();
+                reader.onload = function(e) {
+                    if ( typeof input.attr('multiple') === 'undefined' ) {
+                        img.empty();
+                    }
+                    img.append('<img src="'+ e.target.result +'" class="img-border img-thumbnail">');
+                }
+                reader.readAsDataURL(this.files[i]);
+            }
+        }
+    }); // PREVIEW THE IMAGE WHEN SELECTED
 
 })(window);
