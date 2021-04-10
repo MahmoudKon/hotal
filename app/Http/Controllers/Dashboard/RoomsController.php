@@ -41,8 +41,7 @@ class RoomsController extends DashboardController
                         ]);
                     }
                 }
-                toastr()->success('Room Created Successfully', 'Create');
-                return redirect()->route('dashboard.rooms.index');
+                return response()->json(['message' => 'Room Created Successfully', 'title' => 'Create']);
             }
         } catch (\Exception $e) {
             toastr()->error($e->getMessage(), 'Exception');
@@ -68,8 +67,7 @@ class RoomsController extends DashboardController
                     ]);
                 }
             }
-            toastr()->success('Room Updated Successfully', 'Update');
-            return redirect()->route('dashboard.rooms.index');
+            return response()->json(['message' => 'Room Updated Successfully', 'title' => 'Update']);
         } catch (\Exception $e) {
             toastr()->error($e->getMessage(), 'Exception');
             return redirect()->back();

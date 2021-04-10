@@ -2,7 +2,7 @@
     <div class="modal-dialog" role="document" style="max-width: max-content; min-width: 400px; margin: 4rem auto">
         <div class="modal-content">
             <div class="modal-body p-0">
-                <div id="form_body"></div>
+                <div id="form_body" style="max-width: 700px"></div>
             </div>
         </div>
     </div>

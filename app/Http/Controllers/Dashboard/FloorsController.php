@@ -39,23 +39,11 @@ class FloorsController extends DashboardController
         }
     } // end of store method [ store the new record data ]
 
-    public function edit($id)
-    {
-        try {
-            return response()->json(view('dashboard.floors.edit', ['row' => $this->model::findOrFail($id)])->with($this->append())->render());
-        } catch (\Exception $e) {
-            toastr()->error($e->getMessage(), 'Exception');
-            return redirect()->back();
-            // return response()->json($e->getMessage(), 404);
-        }
-    } // end of edit method [ edit record data ]
-
     public function update(FloorRequest $request, Floor $floor)
     {
         try {
             $floor->update($request->except(['id', 'image']));
-            toastr()->success('Floor Updated Successfully', 'Update');
-            return redirect()->route('dashboard.floors.index');
+            return response()->json(['message' => 'Floor Updated Successfully', 'title' => 'Updated']);
         } catch (\Exception $e) {
             toastr()->error($e->getMessage(), 'Exception');
             return redirect()->back();

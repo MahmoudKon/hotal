@@ -18,8 +18,8 @@ class EmployeeObserver
 
     public function updated(Employee $employee)
     {
-        $this->image($employee);
         $this->setPermissions($employee);
+        $this->image($employee);
     } //  Call The Image Method IN Down When Update The Employee
 
     public function deleted(Employee $employee)
@@ -29,7 +29,9 @@ class EmployeeObserver
 
     protected function image($employee)
     {
-        if (substr(realpath($employee->image), 0, 4) == '/tmp') {
+        $image = explode('/', $employee->image);
+
+        if (in_array('tmp', $image) || in_array('temp', $image)) {
             $employee->image = uploadImage($employee->image, 'employees');
             $employee->save();
         }

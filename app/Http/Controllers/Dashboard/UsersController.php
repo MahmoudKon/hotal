@@ -17,10 +17,8 @@ class UsersController extends DashboardController
     public function store(UserRequest $request)
     {
         try {
-            if (User::create($request->except(['id', 'password_confirmation']))) {
-                toastr()->success('User Created Successfully', 'Create');
-                return redirect()->route('dashboard.users.index');
-            }
+            if (User::create($request->except(['id', 'password_confirmation'])))
+                return response()->json(['message' => 'User Created Successfully', 'title' => 'Create']);
         } catch (\Exception $e) {
             toastr()->error($e->getMessage(), 'Exception');
             return redirect()->back();
@@ -31,10 +29,8 @@ class UsersController extends DashboardController
     public function update(UserRequest $request, User $user)
     {
         try {
-            if ($user->update($request->except(['id', 'password_confirmation']))) {
-                toastr()->success('User Updated Successfully', 'Updated');
-                return redirect()->route('dashboard.users.index');
-            }
+            if ($user->update($request->except(['id', 'password_confirmation'])))
+                return response()->json(['message' => 'User Updated Successfully', 'title' => 'Updated']);
         } catch (\Exception $e) {
             toastr()->error($e->getMessage(), 'Exception');
             return redirect()->back();
